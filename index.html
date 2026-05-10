@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" class="h-full">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Traveloop</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lucide@0.263.0/dist/umd/lucide.min.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore-compat.js"></script>
+  <script src="firebase-config.js"></script>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=Playfair+Display:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}html,body{height:100%;font-family:'DM Sans',sans-serif;overflow:hidden}.font-display{font-family:'Playfair Display',serif}.app-root{height:100%;width:100%;overflow:hidden;position:relative}.screen{display:none;height:100%;width:100%;overflow-y:auto;position:absolute;inset:0}.screen.active{display:flex;flex-direction:column}.fade-in{animation:fadeIn .3s ease}@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}.btn-primary{background:#1a6b5a;color:#fff;border:none;padding:12px 24px;border-radius:10px;font-weight:600;cursor:pointer;font-size:15px;transition:all .2s}.btn-primary:hover{background:#145549}.btn-primary:disabled{opacity:.5;cursor:not-allowed}.btn-secondary{background:transparent;color:#1a6b5a;border:2px solid #1a6b5a;padding:10px 22px;border-radius:10px;font-weight:600;cursor:pointer;font-size:15px;transition:all .2s}.input-field{width:100%;padding:12px 16px;border:2px solid #e2e0dc;border-radius:10px;font-size:15px;background:#faf9f7;transition:border .2s;outline:none}.input-field:focus{border-color:#1a6b5a;background:#fff}.card{background:#fff;border-radius:14px;border:1px solid #eae8e4;padding:20px;transition:box-shadow .2s}.nav-bottom{position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #eae8e4;display:flex;z-index:50;padding:6px 0 env(safe-area-inset-bottom,6px)}.nav-item{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 4px;cursor:pointer;color:#9b978f;font-size:11px;font-weight:500}.nav-item.active{color:#1a6b5a}.nav-item svg{width:22px;height:22px}.toast-container{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:300;pointer-events:none}.toast{background:#323232;color:#fff;padding:12px 22px;border-radius:10px;font-size:14px;font-weight:500;white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.15);animation:toastIn .3s ease forwards}@keyframes toastIn{from{transform:translateY(40px);opacity:0}to{transform:translateY(0);opacity:1}}.tab-bar{display:flex;gap:4px;background:#f0efeb;padding:4px;border-radius:12px}.tab-btn{flex:1;padding:10px 8px;border-radius:9px;border:none;font-size:13px;font-weight:600;cursor:pointer;background:transparent;color:#666}.tab-btn.active{background:#fff;color:#1a6b5a;box-shadow:0 2px 8px rgba(0,0,0,.06)}.empty-state{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:60px 20px;text-align:center;color:#9b978f}.status-pill{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border-radius:999px;background:#e8f5e9;color:#1a6b5a;font-size:12px;font-weight:700}@media(min-width:768px){.app-root{max-width:480px;margin:0 auto;box-shadow:0 0 40px rgba(0,0,0,.08);border-left:1px solid #eae8e4;border-right:1px solid #eae8e4}.nav-bottom{max-width:480px;left:50%;transform:translateX(-50%)}}
+  </style>
+</head>
+<body class="h-full" style="background:#f0efeb">
+  <div class="app-root" id="appRoot" style="background:#faf9f7">
+    <div class="toast-container" id="toastContainer"></div>
+
+    <section id="screenAuth" class="screen active">
+      <div style="height:100%;display:flex;flex-direction:column;justify-content:center;padding:32px 28px" class="fade-in">
+        <div style="text-align:center;margin-bottom:28px">
+          <div style="font-size:44px;margin-bottom:8px">🌍</div>
+          <h1 class="font-display" style="font-size:32px;color:#1a1917;font-weight:700;letter-spacing:-.5px">Traveloop</h1>
+          <p id="authTagline" style="color:#8a8680;font-size:15px;margin-top:6px">Your adventure starts here</p>
+          <p id="storageStatus" class="status-pill" style="margin-top:14px">Checking storage…</p>
+        </div>
+        <div class="tab-bar" style="margin-bottom:24px"><button class="tab-btn active" id="tabLogin" onclick="switchAuthTab('login')">Sign In</button><button class="tab-btn" id="tabSignup" onclick="switchAuthTab('signup')">Sign Up</button></div>
+        <div id="authLogin"><label for="loginEmail" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Email</label><input type="email" id="loginEmail" class="input-field" placeholder="you@email.com" autocomplete="email" style="margin-bottom:14px"><label for="loginPass" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Password</label><input type="password" id="loginPass" class="input-field" placeholder="••••••••" autocomplete="current-password" style="margin-bottom:24px"><button class="btn-primary" style="width:100%" id="btnLogin" onclick="doLogin()">Sign In</button><p id="loginErr" style="color:#e74c3c;font-size:13px;margin-top:10px;text-align:center;display:none"></p></div>
+        <div id="authSignup" style="display:none"><label for="signupName" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Full Name</label><input type="text" id="signupName" class="input-field" placeholder="John Doe" autocomplete="name" style="margin-bottom:14px"><label for="signupEmail" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Email</label><input type="email" id="signupEmail" class="input-field" placeholder="you@email.com" autocomplete="email" style="margin-bottom:14px"><label for="signupPass" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Password</label><input type="password" id="signupPass" class="input-field" placeholder="Min 6 characters" autocomplete="new-password" style="margin-bottom:24px"><button class="btn-primary" style="width:100%" id="btnSignup" onclick="doSignup()">Create Account</button><p id="signupErr" style="color:#e74c3c;font-size:13px;margin-top:10px;text-align:center;display:none"></p></div>
+      </div>
+    </section>
+
+    <section id="screenHome" class="screen">
+      <div style="padding:24px 20px 100px;flex:1" class="fade-in">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px"><div><p style="font-size:13px;color:#8a8680;font-weight:500">Welcome back,</p><h2 class="font-display" style="font-size:24px;color:#1a1917;font-weight:700" id="homeUserName">Traveler</h2></div><div style="width:42px;height:42px;border-radius:50%;background:#1a6b5a;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:16px;cursor:pointer" onclick="goToNav('screenProfile',document.querySelectorAll('.nav-item')[2])" id="homeAvatar">T</div></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:24px"><div class="card" style="text-align:center;padding:16px 10px"><div style="font-size:24px;font-weight:700;color:#1a6b5a" id="statTrips">0</div><div style="font-size:11px;color:#8a8680;font-weight:500">Trips</div></div><div class="card" style="text-align:center;padding:16px 10px"><div style="font-size:24px;font-weight:700;color:#e67e22" id="statCities">0</div><div style="font-size:11px;color:#8a8680;font-weight:500">Cities</div></div></div>
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px"><h3 style="font-size:16px;font-weight:700;color:#2a2825">My Trips</h3><button class="btn-primary" style="font-size:13px;padding:8px 14px" onclick="goToNav('screenCreateTrip',document.querySelectorAll('.nav-item')[1])">+ New</button></div>
+        <div id="homeTrips"></div>
+      </div>
+    </section>
+
+    <section id="screenCreateTrip" class="screen">
+      <div style="padding:20px 20px 100px;flex:1" class="fade-in">
+        <h2 class="font-display" style="font-size:22px;color:#1a1917;font-weight:700;margin-bottom:28px">Plan a New Trip</h2>
+        <label for="ctName" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Trip Name</label><input type="text" id="ctName" class="input-field" placeholder="Summer in Barcelona" style="margin-bottom:16px">
+        <label for="ctDest" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Destination</label><input type="text" id="ctDest" class="input-field" placeholder="Barcelona, Spain" style="margin-bottom:16px">
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px"><div><label for="ctStart" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Start Date</label><input type="date" id="ctStart" class="input-field"></div><div><label for="ctEnd" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">End Date</label><input type="date" id="ctEnd" class="input-field"></div></div>
+        <label for="ctBudget" style="font-size:13px;font-weight:600;color:#5a5753;margin-bottom:6px;display:block">Budget ($)</label><input type="number" id="ctBudget" class="input-field" placeholder="2000" style="margin-bottom:16px"><button class="btn-primary" style="width:100%" id="btnCreateTrip" onclick="createTrip()">Create Trip ✈️</button>
+      </div>
+    </section>
+
+    <section id="screenProfile" class="screen"><div style="padding:24px 20px 100px;flex:1" class="fade-in"><h2 class="font-display" style="font-size:22px;color:#1a1917;font-weight:700;margin-bottom:28px">Profile</h2><div class="card" style="text-align:center;margin-bottom:16px"><div style="width:80px;height:80px;border-radius:50%;background:#1a6b5a;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:32px;margin:0 auto 12px" id="profileAvatar">T</div><h3 style="font-size:18px;font-weight:700;color:#2a2825" id="profileName">Traveler</h3><p style="font-size:13px;color:#8a8680" id="profileEmail">email@test.com</p></div><button class="btn-secondary" style="width:100%" onclick="doLogout()">Sign Out</button></div></section>
+
+    <nav class="nav-bottom" id="bottomNav" style="display:none"><div class="nav-item active" onclick="goToNav('screenHome',this)"><i data-lucide="home"></i><span>Home</span></div><div class="nav-item" onclick="goToNav('screenCreateTrip',this)"><i data-lucide="plus-circle"></i><span>New Trip</span></div><div class="nav-item" onclick="goToNav('screenProfile',this)"><i data-lucide="user"></i><span>Profile</span></div></nav>
+  </div>
+
+  <script>
+    const LS_KEY = 'traveloop_data_v1';
+    let currentUser = null;
+    let allData = [];
+    let storageMode = 'localStorage';
+    let auth = null;
+    let db = null;
+    let unsubscribeTrips = null;
+
+    const firebaseConfig = window.TRAVELOOP_FIREBASE_CONFIG || window.firebaseConfig || null;
+
+    function initializeStorage() {
+      const status = document.getElementById('storageStatus');
+      if (firebaseConfig && window.firebase?.apps && window.firebase.apps.length === 0) {
+        window.firebase.initializeApp(firebaseConfig);
+      }
+      if (firebaseConfig && window.firebase?.auth && window.firebase?.firestore) {
+        storageMode = 'firebase';
+        auth = window.firebase.auth();
+        db = window.firebase.firestore();
+        status.textContent = 'Firebase connected';
+        status.style.background = '#e8f5e9';
+        status.style.color = '#1a6b5a';
+        auth.onAuthStateChanged(async user => {
+          if (user) {
+            const profile = await ensureFirebaseProfile(user);
+            currentUser = { uid: user.uid, email: user.email, name: profile.name || user.displayName || user.email.split('@')[0] };
+            subscribeFirebaseData(user.uid);
+            enterApp();
+          }
+        });
+      } else {
+        storageMode = 'localStorage';
+        allData = readLocalData();
+        status.textContent = 'Local demo storage';
+        status.style.background = '#fff3e0';
+        status.style.color = '#e65100';
+      }
+    }
+
+    function readLocalData() {
+      const raw = localStorage.getItem(LS_KEY);
+      return raw ? JSON.parse(raw) : [];
+    }
+    function writeLocalData() { localStorage.setItem(LS_KEY, JSON.stringify(allData)); }
+    function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,8)}
+    function toast(msg){const c=document.getElementById('toastContainer');const t=document.createElement('div');t.className='toast';t.textContent=msg;c.appendChild(t);setTimeout(()=>t.remove(),2500)}
+    function esc(s){if(!s)return '';const d=document.createElement('div');d.textContent=s;return d.innerHTML}
+    function formatDate(d){if(!d)return '';return new Date(d+'T00:00:00').toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'})}
+
+    function switchAuthTab(tab){document.getElementById('tabLogin').classList.toggle('active',tab==='login');document.getElementById('tabSignup').classList.toggle('active',tab==='signup');document.getElementById('authLogin').style.display=tab==='login'?'block':'none';document.getElementById('authSignup').style.display=tab==='signup'?'block':'none'}
+    function goTo(screenId){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(screenId).classList.add('active');document.getElementById(screenId).scrollTop=0;window.lucide?.createIcons()}
+    function goToNav(screenId,el){goTo(screenId);document.querySelectorAll('.nav-item').forEach(n=>n.classList.remove('active'));el.classList.add('active');if(screenId==='screenHome')refreshHome();if(screenId==='screenProfile')renderProfile()}
+
+    async function ensureFirebaseProfile(user) {
+      const ref = db.collection('users').doc(user.uid);
+      const snap = await ref.get();
+      if (!snap.exists) {
+        const profile = { email: user.email, name: user.displayName || user.email.split('@')[0], createdAt: new Date().toISOString() };
+        await ref.set(profile, { merge: true });
+        return profile;
+      }
+      return snap.data();
+    }
+
+    function subscribeFirebaseData(uid) {
+      if (unsubscribeTrips) unsubscribeTrips();
+      unsubscribeTrips = db.collection('trips').where('ownerUid', '==', uid).onSnapshot(snapshot => {
+        allData = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+        if (currentUser) refreshHome();
+      }, error => toast('Firestore error: ' + error.message));
+    }
+
+    async function doSignup(){
+      const n=document.getElementById('signupName').value.trim();const e=document.getElementById('signupEmail').value.trim();const p=document.getElementById('signupPass').value;const err=document.getElementById('signupErr');err.style.display='none';
+      if(!n||!e||!p){err.textContent='Please fill all fields';err.style.display='block';return}if(p.length<6){err.textContent='Password must be at least 6 characters';err.style.display='block';return}
+      const btn=document.getElementById('btnSignup');btn.disabled=true;btn.textContent='Creating...';
+      if(storageMode==='firebase'){
+        auth.createUserWithEmailAndPassword(e,p).then(async cred=>{await cred.user.updateProfile({displayName:n});await db.collection('users').doc(cred.user.uid).set({email:e,name:n,createdAt:new Date().toISOString()},{merge:true});toast('Welcome to Traveloop, '+n+'! 🎉')}).catch(error=>{err.textContent=cleanFirebaseError(error);err.style.display='block'}).finally(()=>{btn.disabled=false;btn.textContent='Create Account'});
+        return;
+      }
+      if(allData.find(r=>r.type==='user'&&r.user_email===e)){err.textContent='Account already exists. Please sign in.';err.style.display='block';btn.disabled=false;btn.textContent='Create Account';return}
+      currentUser={email:e,name:n};allData.push({type:'user',user_email:e,user_name:n,user_pass:p});writeLocalData();btn.disabled=false;btn.textContent='Create Account';toast('Welcome to Traveloop, '+n+'! 🎉');enterApp();
+    }
+
+    async function doLogin(){
+      const e=document.getElementById('loginEmail').value.trim();const p=document.getElementById('loginPass').value;const err=document.getElementById('loginErr');err.style.display='none';if(!e||!p){err.textContent='Enter email and password';err.style.display='block';return}
+      const btn=document.getElementById('btnLogin');btn.disabled=true;btn.textContent='Signing in...';
+      if(storageMode==='firebase'){
+        auth.signInWithEmailAndPassword(e,p).catch(error=>{err.textContent=cleanFirebaseError(error);err.style.display='block'}).finally(()=>{btn.disabled=false;btn.textContent='Sign In'});
+        return;
+      }
+      const user=allData.find(r=>r.type==='user'&&r.user_email===e&&r.user_pass===p);btn.disabled=false;btn.textContent='Sign In';if(!user){err.textContent='Invalid credentials. Check your email and password.';err.style.display='block';return}currentUser={email:user.user_email,name:user.user_name};toast('Welcome back, '+currentUser.name+'! 👋');enterApp();
+    }
+
+    function cleanFirebaseError(error) {
+      if (!error?.message) return 'Something went wrong. Try again.';
+      return error.message.replace('Firebase: ', '').replace(/\s*\([^)]*\)\.?$/, '.');
+    }
+
+    function doLogout(){
+      if(storageMode==='firebase' && auth){auth.signOut(); if(unsubscribeTrips) unsubscribeTrips();}
+      currentUser=null;document.getElementById('bottomNav').style.display='none';goTo('screenAuth');toast('Signed out');
+    }
+
+    function enterApp(){document.getElementById('bottomNav').style.display='flex';goTo('screenHome');document.querySelectorAll('.nav-item').forEach((n,i)=>n.classList.toggle('active',i===0));refreshHome();window.lucide?.createIcons()}
+    function userTrips(){return allData.filter(r=>storageMode==='firebase'?true:(r.type==='trip'&&r.user_email===currentUser.email))}
+
+    function refreshHome(){
+      if(!currentUser)return;const trips=userTrips();document.getElementById('homeUserName').textContent=currentUser.name.split(' ')[0];document.getElementById('homeAvatar').textContent=currentUser.name[0].toUpperCase();document.getElementById('statTrips').textContent=trips.length;document.getElementById('statCities').textContent=new Set(trips.map(t=>t.trip_dest)).size;
+      const ht=document.getElementById('homeTrips');
+      if(!trips.length){ht.innerHTML='<div class="empty-state"><i data-lucide="map"></i><p>Your trips will appear here</p></div>';window.lucide?.createIcons();return}
+      ht.innerHTML=trips.map(t=>`<div class="card" style="margin-bottom:10px"><div style="font-weight:700;font-size:15px;color:#2a2825">${esc(t.trip_name)}</div><div style="font-size:13px;color:#8a8680">📍 ${esc(t.trip_dest)}</div><div style="font-size:12px;color:#8a8680;margin-top:8px">📅 ${formatDate(t.trip_start)} — ${formatDate(t.trip_end)} · 💰 $${Number(t.trip_budget||0).toFixed(0)}</div></div>`).join('');
+    }
+
+    async function createTrip(){
+      const name=document.getElementById('ctName').value.trim();const dest=document.getElementById('ctDest').value.trim();const start=document.getElementById('ctStart').value;const end=document.getElementById('ctEnd').value;const budget=parseFloat(document.getElementById('ctBudget').value)||0;if(!name||!dest){toast('Please enter trip name and destination');return}if(!start||!end){toast('Please select dates');return}
+      const btn=document.getElementById('btnCreateTrip');btn.disabled=true;btn.textContent='Creating...';
+      const trip={type:'trip',user_email:currentUser.email,user_name:currentUser.name,trip_id:uid(),trip_name:name,trip_dest:dest,trip_start:start,trip_end:end,trip_budget:budget,createdAt:new Date().toISOString()};
+      if(storageMode==='firebase'){
+        db.collection('trips').add({...trip, ownerUid: currentUser.uid}).then(()=>{clearTripForm();toast('Trip created! 🎉');goToNav('screenHome',document.querySelectorAll('.nav-item')[0])}).catch(error=>toast('Failed to create trip: '+error.message)).finally(()=>{btn.disabled=false;btn.textContent='Create Trip ✈️'});
+        return;
+      }
+      allData.push(trip);writeLocalData();btn.disabled=false;btn.textContent='Create Trip ✈️';clearTripForm();toast('Trip created! 🎉');goToNav('screenHome',document.querySelectorAll('.nav-item')[0]);
+    }
+    function clearTripForm(){['ctName','ctDest','ctStart','ctEnd','ctBudget'].forEach(id=>document.getElementById(id).value='')}
+    function renderProfile(){if(!currentUser)return;document.getElementById('profileName').textContent=currentUser.name;document.getElementById('profileEmail').textContent=currentUser.email;document.getElementById('profileAvatar').textContent=currentUser.name[0].toUpperCase()}
+
+    initializeStorage();
+    window.lucide?.createIcons();
+  </script>
+</body>
+</html>
