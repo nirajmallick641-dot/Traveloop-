@@ -74,7 +74,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
   <style>body { box-sizing: border-box; }</style>
  </head>
  <body class="h-full">
-  <div class="app-shell" id="appShell"><!-- Toast Container -->
+  <div class="app-shell" id="appShell">
+   <!-- Toast Container -->
    <div class="toast-container" id="toastContainer"></div><!-- LOGIN SCREEN -->
    <div class="screen active" id="screenLogin">
     <div style="flex:1;display:flex;align-items:center;justify-content:center;padding:24px">
@@ -87,13 +88,17 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
        <p id="taglineText" style="color:#6b5b4e;margin:6px 0 0;font-size:15px">Plan trips that actually happen</p>
       </div>
       <div id="loginForm">
-       <div style="display:flex;gap:0;margin-bottom:24px;background:#e5e0d8;border-radius:10px;padding:3px"><button onclick="toggleAuth('login')" id="tabLogin" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;background:#fff;color:#2c2416;transition:all .2s">Sign In</button> <button onclick="toggleAuth('signup')" id="tabSignup" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;background:transparent;color:#6b5b4e;transition:all .2s">Sign Up</button>
+       <div style="display:flex;gap:0;margin-bottom:24px;background:#e5e0d8;border-radius:10px;padding:3px">
+        <button onclick="toggleAuth('login')" id="tabLogin" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;background:#fff;color:#2c2416;transition:all .2s">Sign In</button> <button onclick="toggleAuth('signup')" id="tabSignup" style="flex:1;padding:10px;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:14px;font-family:'DM Sans',sans-serif;background:transparent;color:#6b5b4e;transition:all .2s">Sign Up</button>
        </div>
-       <div id="signupNameWrap" style="display:none;margin-bottom:14px"><input type="text" id="authName" class="input-field" placeholder="Your full name">
+       <div id="signupNameWrap" style="display:none;margin-bottom:14px">
+        <input type="text" id="authName" class="input-field" placeholder="Your full name">
        </div>
-       <div style="margin-bottom:14px"><input type="email" id="authEmail" class="input-field" placeholder="Email address">
+       <div style="margin-bottom:14px">
+        <input type="email" id="authEmail" class="input-field" placeholder="Email address">
        </div>
-       <div style="margin-bottom:20px"><input type="password" id="authPass" class="input-field" placeholder="Password">
+       <div style="margin-bottom:20px">
+        <input type="password" id="authPass" class="input-field" placeholder="Password">
        </div><button class="btn-primary" style="width:100%" id="authBtn" onclick="handleAuth()">Sign In</button>
        <p id="authError" style="color:#b85c38;font-size:13px;margin-top:12px;display:none"></p>
       </div>
@@ -108,22 +113,20 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
         <p style="color:#6b5b4e;font-size:13px;margin:0">Welcome back,</p>
         <h2 id="dashUserName" style="font-family:'Playfair Display',serif;font-size:24px;color:#2c2416;margin:4px 0 0"></h2>
        </div>
-       <div style="display:flex;gap:12px;align-items:center"><button onclick="goScreen('screenNotifs')" style="background:none;border:none;cursor:pointer;position:relative;color:#2c2416"><i data-lucide="bell"></i><span id="notifBadge" class="badge" style="display:none">0</span></button> <button onclick="goScreen('screenProfile')" style="width:40px;height:40px;border-radius:50%;background:#c8883a;border:none;color:#fff;font-weight:700;font-size:16px;cursor:pointer" id="dashAvatar">U</button>
+       <div style="display:flex;gap:12px;align-items:center">
+        <button onclick="goScreen('screenNotifs')" style="background:none;border:none;cursor:pointer;position:relative;color:#2c2416"><i data-lucide="bell"></i><span id="notifBadge" class="badge" style="display:none">0</span></button> <button onclick="goScreen('screenProfile')" style="width:40px;height:40px;border-radius:50%;background:#c8883a;border:none;color:#fff;font-weight:700;font-size:16px;cursor:pointer" id="dashAvatar">U</button>
        </div>
       </div>
       <div class="trip-hero" style="margin-bottom:24px">
        <p style="font-size:13px;opacity:.8;margin:0 0 6px">Your Travel Stats</p>
        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:12px">
-        <div>
-         <span id="statTrips" style="font-size:28px;font-weight:700">0</span>
+        <div><span id="statTrips" style="font-size:28px;font-weight:700">0</span>
          <p style="font-size:12px;opacity:.7;margin:4px 0 0">Trips</p>
         </div>
-        <div>
-         <span id="statCities" style="font-size:28px;font-weight:700">0</span>
+        <div><span id="statCities" style="font-size:28px;font-weight:700">0</span>
          <p style="font-size:12px;opacity:.7;margin:4px 0 0">Cities</p>
         </div>
-        <div>
-         <span id="statBudget" style="font-size:28px;font-weight:700">$0</span>
+        <div><span id="statBudget" style="font-size:28px;font-weight:700">$0</span>
          <p style="font-size:12px;opacity:.7;margin:4px 0 0">Spent</p>
         </div>
        </div>
@@ -167,31 +170,27 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenCreateTrip">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Create New Trip</h2>
       </div>
       <form onsubmit="createTrip(event)">
-       <div style="margin-bottom:16px">
-        <label>Trip Name</label><input type="text" id="ctName" class="input-field" placeholder="Weekend in Paris" required>
+       <div style="margin-bottom:16px"><label>Trip Name</label><input type="text" id="ctName" class="input-field" placeholder="Weekend in Paris" required>
        </div>
-       <div style="margin-bottom:16px">
-        <label>Destination</label><input type="text" id="ctDest" class="input-field" placeholder="Paris, France" required>
+       <div style="margin-bottom:16px"><label>Destination</label><input type="text" id="ctDest" class="input-field" placeholder="Paris, France" required>
        </div>
        <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:16px">
-        <div>
-         <label>Start Date</label><input type="date" id="ctStart" class="input-field" required>
+        <div><label>Start Date</label><input type="date" id="ctStart" class="input-field" required>
         </div>
-        <div>
-         <label>End Date</label><input type="date" id="ctEnd" class="input-field" required>
+        <div><label>End Date</label><input type="date" id="ctEnd" class="input-field" required>
         </div>
        </div>
-       <div style="margin-bottom:16px">
-        <label>Budget ($)</label><input type="number" id="ctBudget" class="input-field" placeholder="2000" min="0">
+       <div style="margin-bottom:16px"><label>Budget ($)</label><input type="number" id="ctBudget" class="input-field" placeholder="2000" min="0">
        </div>
-       <div style="margin-bottom:20px">
-        <label>Notes</label><textarea id="ctNotes" class="input-field" rows="3" placeholder="Any special plans or reminders..."></textarea>
+       <div style="margin-bottom:20px"><label>Notes</label><textarea id="ctNotes" class="input-field" rows="3" placeholder="Any special plans or reminders..."></textarea>
        </div>
-       <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px"><label class="switch" style="margin:0"><input type="checkbox" id="ctPublic"><span class="slider"></span></label> <span style="font-size:14px;color:#2c2416;font-weight:500">Make this trip public</span>
+       <div style="display:flex;align-items:center;gap:10px;margin-bottom:24px">
+        <label class="switch" style="margin:0"><input type="checkbox" id="ctPublic"><span class="slider"></span></label> <span style="font-size:14px;color:#2c2416;font-weight:500">Make this trip public</span>
        </div><button type="submit" class="btn-primary" style="width:100%" id="ctBtn">Create Trip</button>
       </form>
      </div>
@@ -203,8 +202,7 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:20px">
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">My Trips</h2><button onclick="goScreen('screenCreateTrip')" class="btn-primary" style="padding:8px 18px;font-size:13px">+ New</button>
       </div>
-      <div style="margin-bottom:16px">
-       <input type="text" id="tripSearchInput" class="input-field" placeholder="Search trips..." oninput="renderTrips()">
+      <div style="margin-bottom:16px"><input type="text" id="tripSearchInput" class="input-field" placeholder="Search trips..." oninput="renderTrips()">
       </div>
       <div id="tripsList"></div>
      </div>
@@ -213,7 +211,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenItinerary">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="slide-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px"><button onclick="goScreen('screenTrips')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:8px">
+       <button onclick="goScreen('screenTrips')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 id="itinTitle" style="font-family:'Playfair Display',serif;font-size:20px;color:#2c2416;margin:0"></h2>
       </div>
       <p id="itinSubtitle" style="color:#6b5b4e;font-size:13px;margin:0 0 16px 36px"></p>
@@ -225,7 +224,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenItinView">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="goScreen('screenItinerary')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="goScreen('screenItinerary')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#2c2416;margin:0">Full Itinerary</h2>
       </div>
       <div id="itinViewContent"></div>
@@ -235,7 +235,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenCitySearch">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Explore Cities</h2>
       </div><input type="text" id="citySearchInput" class="input-field" placeholder="Search a destination..." oninput="filterCities()">
       <div id="cityResults" style="margin-top:16px"></div>
@@ -245,7 +246,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenActivitySearch">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Find Activities</h2>
       </div><input type="text" id="actSearchInput" class="input-field" placeholder="What do you want to do?" oninput="filterActivities()">
       <div style="display:flex;gap:8px;flex-wrap:wrap;margin:14px 0" id="actCatTags"></div>
@@ -256,7 +258,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenBudget">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#2c2416;margin:0">Budget Breakdown</h2>
       </div>
       <div id="budgetContent"></div>
@@ -266,10 +269,12 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenPacking">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#2c2416;margin:0">Packing List</h2>
       </div>
-      <div style="display:flex;gap:8px;margin-bottom:16px"><input type="text" id="packInput" class="input-field" placeholder="Add item..." style="flex:1"> <button onclick="addPackItem()" class="btn-primary" style="padding:10px 18px">Add</button>
+      <div style="display:flex;gap:8px;margin-bottom:16px">
+       <input type="text" id="packInput" class="input-field" placeholder="Add item..." style="flex:1"> <button onclick="addPackItem()" class="btn-primary" style="padding:10px 18px">Add</button>
       </div>
       <div id="packProgress" style="margin-bottom:16px"></div>
       <div id="packList"></div>
@@ -279,7 +284,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenPublic">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Shared Itineraries</h2>
       </div>
       <div id="publicList"></div>
@@ -289,7 +295,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenProfile">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Profile &amp; Settings</h2>
       </div>
       <div style="text-align:center;margin-bottom:28px">
@@ -301,15 +308,16 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
       </div>
       <div class="card" style="margin-bottom:12px">
        <h4 style="font-size:14px;color:#6b5b4e;margin:0 0 14px;font-weight:600">ACCOUNT</h4>
-       <div style="margin-bottom:12px">
-        <label>Display Name</label><input type="text" id="profNameInput" class="input-field">
+       <div style="margin-bottom:12px"><label>Display Name</label><input type="text" id="profNameInput" class="input-field">
        </div><button onclick="updateProfile()" class="btn-primary" style="width:100%">Save Changes</button>
       </div>
       <div class="card" style="margin-bottom:12px">
        <h4 style="font-size:14px;color:#6b5b4e;margin:0 0 14px;font-weight:600">TRAVEL PREFERENCES</h4>
-       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px"><span style="font-size:14px;color:#2c2416">Dark Mode</span> <label class="switch"><input type="checkbox" id="darkToggle" onchange="toggleDark()"><span class="slider"></span></label>
+       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <span style="font-size:14px;color:#2c2416">Dark Mode</span> <label class="switch"><input type="checkbox" id="darkToggle" onchange="toggleDark()"><span class="slider"></span></label>
        </div>
-       <div style="display:flex;justify-content:space-between;align-items:center"><span style="font-size:14px;color:#2c2416">Notifications</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
+       <div style="display:flex;justify-content:space-between;align-items:center">
+        <span style="font-size:14px;color:#2c2416">Notifications</span> <label class="switch"><input type="checkbox" checked><span class="slider"></span></label>
        </div>
       </div><button onclick="handleLogout()" class="btn-secondary" style="width:100%;color:#b85c38;border-color:#b85c38">Sign Out</button>
      </div>
@@ -318,10 +326,12 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenNotes">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="openTrip(currentTripId)" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:20px;color:#2c2416;margin:0">Trip Journal</h2>
       </div>
-      <div style="margin-bottom:16px"><textarea id="noteInput" class="input-field" rows="3" placeholder="Write about your trip experience..."></textarea> <button onclick="addNote()" class="btn-primary" style="width:100%;margin-top:8px">Add Entry</button>
+      <div style="margin-bottom:16px">
+       <textarea id="noteInput" class="input-field" rows="3" placeholder="Write about your trip experience..."></textarea> <button onclick="addNote()" class="btn-primary" style="width:100%;margin-top:8px">Add Entry</button>
       </div>
       <div id="notesList"></div>
      </div>
@@ -330,7 +340,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenNotifs">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:20px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Notifications</h2>
       </div>
       <div id="notifList"></div>
@@ -340,7 +351,8 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
    <div class="screen" id="screenAdmin">
     <div style="padding:20px 20px 100px;max-width:600px;margin:0 auto;width:100%">
      <div class="fade-in">
-      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px"><button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
+      <div style="display:flex;align-items:center;gap:12px;margin-bottom:24px">
+       <button onclick="goScreen('screenDashboard')" style="background:none;border:none;cursor:pointer;color:#2c2416"><i data-lucide="arrow-left"></i></button>
        <h2 style="font-family:'Playfair Display',serif;font-size:22px;color:#2c2416;margin:0">Analytics</h2>
       </div>
       <div id="adminContent"></div>
@@ -353,19 +365,15 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
       <h3 style="font-size:18px;color:#2c2416;margin:0;font-weight:700">Add Activity</h3><button onclick="closeModal('modalActivity')" style="background:none;border:none;cursor:pointer;color:#6b5b4e"><i data-lucide="x"></i></button>
      </div>
      <form onsubmit="addActivity(event)">
-      <div style="margin-bottom:12px">
-       <label>Activity</label><input type="text" id="actTitle" class="input-field" placeholder="Visit Eiffel Tower" required>
+      <div style="margin-bottom:12px"><label>Activity</label><input type="text" id="actTitle" class="input-field" placeholder="Visit Eiffel Tower" required>
       </div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px">
-       <div>
-        <label>Time</label><input type="time" id="actTime" class="input-field">
+       <div><label>Time</label><input type="time" id="actTime" class="input-field">
        </div>
-       <div>
-        <label>Cost ($)</label><input type="number" id="actCost" class="input-field" placeholder="0" min="0">
+       <div><label>Cost ($)</label><input type="number" id="actCost" class="input-field" placeholder="0" min="0">
        </div>
       </div>
-      <div style="margin-bottom:16px">
-       <label>Category</label> <select id="actCat" class="input-field"><option value="sightseeing">Sightseeing</option><option value="food">Food &amp; Dining</option><option value="transport">Transport</option><option value="accommodation">Accommodation</option><option value="shopping">Shopping</option><option value="entertainment">Entertainment</option><option value="other">Other</option></select>
+      <div style="margin-bottom:16px"><label>Category</label> <select id="actCat" class="input-field"><option value="sightseeing">Sightseeing</option><option value="food">Food &amp; Dining</option><option value="transport">Transport</option><option value="accommodation">Accommodation</option><option value="shopping">Shopping</option><option value="entertainment">Entertainment</option><option value="other">Other</option></select>
       </div><button type="submit" class="btn-primary" style="width:100%" id="actSubmitBtn">Add Activity</button>
      </form>
     </div>
@@ -377,14 +385,61 @@ label{display:block;font-weight:600;font-size:13px;color:#6b5b4e;margin-bottom:6
      </div>
      <h3 style="font-size:18px;color:#2c2416;margin:0 0 8px">Delete this?</h3>
      <p style="color:#6b5b4e;font-size:14px;margin:0 0 20px">This action cannot be undone.</p>
-     <div style="display:flex;gap:12px"><button onclick="closeModal('modalDelete')" class="btn-secondary" style="flex:1">Cancel</button> <button onclick="confirmDelete()" class="btn-primary" style="flex:1;background:#b85c38" id="delConfirmBtn">Delete</button>
+     <div style="display:flex;gap:12px">
+      <button onclick="closeModal('modalDelete')" class="btn-secondary" style="flex:1">Cancel</button> <button onclick="confirmDelete()" class="btn-primary" style="flex:1;background:#b85c38" id="delConfirmBtn">Delete</button>
      </div>
     </div>
    </div><!-- BOTTOM NAV -->
-   <nav class="bottom-nav" id="bottomNav" style="display:none"><button onclick="goScreen('screenDashboard')" data-nav="screenDashboard"><i data-lucide="home"></i>Home</button> <button onclick="goScreen('screenTrips')" data-nav="screenTrips"><i data-lucide="map"></i>Trips</button> <button onclick="goScreen('screenCitySearch')" data-nav="screenCitySearch"><i data-lucide="search"></i>Explore</button> <button onclick="goScreen('screenPublic')" data-nav="screenPublic"><i data-lucide="globe"></i>Shared</button> <button onclick="goScreen('screenProfile')" data-nav="screenProfile"><i data-lucide="user"></i>Profile</button>
+   <nav class="bottom-nav" id="bottomNav" style="display:none">
+    <button onclick="goScreen('screenDashboard')" data-nav="screenDashboard"><i data-lucide="home"></i>Home</button> <button onclick="goScreen('screenTrips')" data-nav="screenTrips"><i data-lucide="map"></i>Trips</button> <button onclick="goScreen('screenCitySearch')" data-nav="screenCitySearch"><i data-lucide="search"></i>Explore</button> <button onclick="goScreen('screenPublic')" data-nav="screenPublic"><i data-lucide="globe"></i>Shared</button> <button onclick="goScreen('screenProfile')" data-nav="screenProfile"><i data-lucide="user"></i>Profile</button>
    </nav>
   </div>
   <script>
+// ===== FIREBASE CONFIG =====
+// Add your Firebase credentials here. If empty or unchanged, uses local demo mode.
+// Get these from Firebase Console > Project Settings
+const FIREBASE_CONFIG={
+  apiKey:'YOUR_FIREBASE_API_KEY',
+  authDomain:'YOUR_PROJECT.firebaseapp.com',
+  projectId:'YOUR_PROJECT_ID',
+  storageBucket:'YOUR_PROJECT.appspot.com',
+  messagingSenderId:'YOUR_MESSAGING_ID',
+  appId:'YOUR_APP_ID'
+};
+
+// ===== FIREBASE AUTHENTICATION HELPERS =====
+async function firebaseSignup(email,password,name){
+  try{
+    const url=`https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=${FIREBASE_CONFIG.apiKey}`;
+    const response=await fetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,password,returnSecureToken:true})
+    });
+    const data=await response.json();
+    if(!response.ok)return{success:false,error:data.error?.message||'Signup failed'};
+    return{success:true,user:{email:data.email,uid:data.localId,displayName:name}};
+  }catch(e){
+    return{success:false,error:e.message};
+  }
+}
+
+async function firebaseSignin(email,password){
+  try{
+    const url=`https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=${FIREBASE_CONFIG.apiKey}`;
+    const response=await fetch(url,{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email,password,returnSecureToken:true})
+    });
+    const data=await response.json();
+    if(!response.ok)return{success:false,error:data.error?.message||'Sign in failed'};
+    return{success:true,user:{email:data.email,uid:data.localId,displayName:data.displayName}};
+  }catch(e){
+    return{success:false,error:e.message};
+  }
+}
+
 // ---- STATE ----
 let allData=[];
 let currentUser=null;
@@ -550,6 +605,35 @@ async function handleAuth(){
   btn.disabled=true;
   btn.textContent=authMode==='signup'?'Creating account...':'Signing in...';
 
+  try{
+    // Try Firebase first if API key is configured
+    if(FIREBASE_CONFIG.apiKey&&FIREBASE_CONFIG.apiKey!=='YOUR_FIREBASE_API_KEY'){
+      const result=authMode==='signup'?
+        await firebaseSignup(email,pass,document.getElementById('authName').value.trim()):
+        await firebaseSignin(email,pass);
+      
+      if(result.success){
+        currentUser=result.user.email;
+        toast('Welcome '+(result.user.displayName||'Traveler')+'!');
+        btn.disabled=false;
+        btn.textContent=authMode==='signup'?'Create Account':'Sign In';
+        await new Promise(r=>setTimeout(r,400));
+        goScreen('screenDashboard');
+        return;
+      }else{
+        err.textContent=result.error||'Auth failed';
+        err.style.display='block';
+        btn.disabled=false;
+        btn.textContent=authMode==='signup'?'Create Account':'Sign In';
+        return;
+      }
+    }
+  }catch(e){
+    console.error('Firebase error:',e);
+    // Fall back to local demo mode
+  }
+
+  // LOCAL DEMO MODE - uses Canva Data SDK
   const users=allData.filter(d=>d.type==='user');
   if(authMode==='signup'){
     const name=document.getElementById('authName').value.trim();
@@ -1146,5 +1230,5 @@ async function deleteItem(bid,type){
 // ---- INIT ----
 lucide.createIcons();
 </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f964a0a51d27a8d',t:'MTc3ODM4ODI3Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f96519cd6e67a8d',t:'MTc3ODM4ODU4Mi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
